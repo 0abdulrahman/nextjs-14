@@ -29,7 +29,9 @@
     ".next/types/**/*.ts",
     "app/lib/placeholder-data.js",
     "scripts/seed.js",
-    "app/ui/search.jsx"
+    "app/ui/search.jsx",
+    "app/ui/dashboard/revenue-chart.jsx",
+    "app/ui/dashboard/cards.jsx"
   ],
   "exclude": ["node_modules"]
 }

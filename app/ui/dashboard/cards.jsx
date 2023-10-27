@@ -1,5 +1,6 @@
 import { BanknotesIcon, ClockIcon, UserGroupIcon, InboxIcon } from "@heroicons/react/24/outline";
 import { lusitana } from "@/app/ui/fonts";
+import { fetchCardData } from "@/app/lib/data";
 
 const iconMap = {
   collected: BanknotesIcon,
@@ -9,10 +10,7 @@ const iconMap = {
 };
 
 export default async function Cards() {
-  const totalPaidInvoices = 2;
-  const numberOfCustomers = 2;
-  const totalPendingInvoices = 2;
-  const numberOfInvoices = 2;
+  const { totalPaidInvoices, numberOfCustomers, totalPendingInvoices, numberOfInvoices } = await fetchCardData();
   return (
     <>
       <Card title="Collected" value={totalPaidInvoices} type="collected" />
@@ -23,15 +21,7 @@ export default async function Cards() {
   );
 }
 
-export function Card({
-  title,
-  value,
-  type,
-}: {
-  title: string;
-  value: number | string;
-  type: "invoices" | "customers" | "pending" | "collected";
-}) {
+export function Card({ title, value, type }) {
   const Icon = iconMap[type];
 
   return (
