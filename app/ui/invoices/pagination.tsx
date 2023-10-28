@@ -4,21 +4,27 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import Link from "next/link";
 import { generatePagination } from "@/app/lib/utils";
+import { usePathname, useSearchParams } from "next/navigation";
 
-export default function Pagination({ totalPages }) {
-  const currentPage = 2;
+export default function Pagination({ totalPages }: { totalPages: number }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
   const allPages = generatePagination(currentPage, totalPages);
-  function createPageURL() {}
+
+  function createPageURL(pageNumber: string | number) {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", pageNumber.toString());
+    return `${pathname}?${params?.toString()}`;
+  }
+
   return (
     <div className="inline-flex">
       <PaginationArrow direction="left" href={createPageURL(currentPage - 1)} isDisabled={currentPage <= 1} />
 
       <div className="flex -space-x-px">
         {allPages.map((page, index) => {
-          {
-            /* let position: "first" | "last" | "single" | "middle" | undefined; */
-          }
-          let position;
+          let position: "first" | "last" | "single" | "middle" | undefined;
 
           if (index === 0) position = "first";
           if (index === allPages.length - 1) position = "last";
@@ -42,7 +48,17 @@ export default function Pagination({ totalPages }) {
   );
 }
 
-function PaginationNumber({ page, href, isActive, position }) {
+function PaginationNumber({
+  page,
+  href,
+  isActive,
+  position,
+}: {
+  page: string | number;
+  href: string;
+  isActive: boolean;
+  position: string | undefined;
+}) {
   const className = clsx("flex h-10 w-10 items-center justify-center text-sm border", {
     "rounded-l-md": position === "first" || position === "single",
     "rounded-r-md": position === "last" || position === "single",
@@ -60,7 +76,7 @@ function PaginationNumber({ page, href, isActive, position }) {
   );
 }
 
-function PaginationArrow({ href, direction, isDisabled }) {
+function PaginationArrow({ href, direction, isDisabled }: { href: string; direction: string; isDisabled: boolean }) {
   const className = clsx("flex h-10 w-10 items-center justify-center rounded-md border", {
     "pointer-events-none text-gray-300": isDisabled,
     "hover:bg-gray-100": !isDisabled,

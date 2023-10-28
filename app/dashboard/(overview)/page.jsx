@@ -4,11 +4,15 @@ import LatestInvoices from "@/app/ui/dashboard/latest-invoices";
 import { lusitana } from "@/app/ui/fonts";
 import { Suspense } from "react";
 import { CardsSkeleton, LatestInvoicesSkeleton, RevenueChartSkeleton } from "@/app/ui/dashboard/skeletons";
+import { getServerSession } from "next-auth";
+import { options } from "@/app/api/auth/[...nextauth]/options";
 
 export default async function Page() {
+  const data = await getServerSession(options);
+  console.log("Dashboard", data);
   return (
     <main>
-      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>Dashboard</h1>
+      <h1 className={`${lusitana.className} mb-4 text-xl md:text-2xl`}>Welcome, {data.user.name ?? "User"}</h1>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <Suspense fallback={<CardsSkeleton />}>
           <Cards />

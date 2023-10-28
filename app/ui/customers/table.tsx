@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { lusitana } from "@/app/ui/fonts";
-import Search from "../search.jsx";
+import Search from "../search-v1.jsx";
 import { CustomersTable, FormattedCustomersTable } from "@/app/lib/definitions";
 
 export default async function CustomersTable({ customers }: { customers: FormattedCustomersTable[] }) {

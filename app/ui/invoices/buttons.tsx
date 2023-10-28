@@ -1,6 +1,6 @@
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-// import { deleteInvoice } from '@/app/lib/actions';
+import { deleteInvoice } from "@/app/lib/actions";
 
 export function CreateInvoice() {
   return (
@@ -22,7 +22,6 @@ export function UpdateInvoice({ id }: { id: string }) {
 }
 
 export function DeleteInvoice({ id }: { id: string }) {
-  async function deleteInvoice() {}
   return (
     <form action={deleteInvoice}>
       <input type="hidden" name="id" value={id} />
